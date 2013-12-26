@@ -25,6 +25,10 @@ class User extends CActiveRecord
 	{
 		return 'user';
 	}
+	public function abc()
+	{
+		return 'user';
+	}
 
 	/**
 	 * @return array validation rules for model attributes.
