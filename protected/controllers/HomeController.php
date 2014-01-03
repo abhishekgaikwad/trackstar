@@ -186,7 +186,7 @@ class HomeController extends Controller
 		$presentAffiliates=Affiliate::model()->with('user')->findAll();
 		if(isset($_POST["Affiliate"]))
 		{	
-                    //var_dump(Yii::app()->request->getPost("Affiliate"));
+                    var_dump(Yii::app()->request->getPost("Affiliate"));
 			$model->affiliate_name = $_POST['Affiliate']['affiliate_name'] ;
 			$model->user_id = Yii::app()->session['user_id'] ;
 			$model->added_on = new CDbExpression('NOW()') ;
