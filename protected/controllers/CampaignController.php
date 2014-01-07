@@ -80,18 +80,49 @@ class CampaignController extends Controller
 				 'criteria'=>  $criteria,
 				 'pagination' => false,));
                           // var_dump($openCampaign->getData());
-            $criteria2 = new CDbCriteria ;
-            $criteria2->condition = 'final_value IS NOT NULL';
-            $criteria2->with = array('merchant','affiliate','addedBy','finalizedBy');
-            $closedCampaign = new CActiveDataProvider('Campaign', array(
-				 'criteria'=>  $criteria2,
-				 'pagination' => false,));
-            
+            $merchant = Merchant::model()->findAll();
+            $affiliate = Affiliate::model()->findAll();
             $this->render('updateCampaign', array(
                 'openCampaign'=>$openCampaign->getData() ,
-                'closedCampaign'=>$closedCampaign->getData() ,
+                'merchant'=>$merchant,
+		'affiliate'=>$affiliate,
             ));
         }
+        
+        
+        public function actionAjaxGetUpdateCampaign() {
+            if(Yii::app()->request->getRequestType() == 'POST') {
+                $criteria = new CDbCriteria ;
+                $criteria->addCondition('final_value IS NULL');
+                $criteria->with = array('merchant','affiliate','addedBy','finalizedBy');
+                
+                if( Yii::app()->request->getPost("month")=='true') {
+                    $period = Yii::app()->request->getPost("monthValue") ;
+                    $date = date("Y-m-d", strtotime($period));
+                    $criteria->addCondition("campaign_date = '$date'");
+                }
+                
+                if( Yii::app()->request->getPost("merchant")=="true") {
+                    $merchant_id = Yii::app()->request->getPost("merchantValue");
+                    $criteria->addCondition("merchant_id = $merchant_id");
+                }
+                
+                if( Yii::app()->request->getPost("affiliate")=="true") {
+                    $affiliate_id = Yii::app()->request->getPost("affiliateValue");
+                    $criteria->addCondition("affiliate_id = $affiliate_id");
+                }
+                    
+                
+                $closedCampaign = new CActiveDataProvider('Campaign', array(
+                    'criteria'=>  $criteria,
+                    'pagination' => false,));
+                
+                $this->renderPartial('ajaxGetUpdateCampaign',array(
+                    'openCampaign' => $closedCampaign->getData(),
+                ));
+            }
+        }
+        
         
         public function actionAjaxUpdate() {
             if(Yii::app()->request->getRequestType() == 'POST') {
@@ -128,6 +159,22 @@ class CampaignController extends Controller
             }
         }
         
+        public function actionClosedCampaign() {
+            $criteria = new CDbCriteria ;
+            $criteria->condition = 'final_value IS NOT NULL';
+            $criteria->with = array('merchant','affiliate','addedBy','finalizedBy');
+            $closedCampaign = new CActiveDataProvider('Campaign', array(
+				 'criteria'=>  $criteria,
+				 'pagination' => false,));
+            $merchant = Merchant::model()->findAll();
+            $affiliate = Affiliate::model()->findAll();
+            $this->render('ClosedCampaign', array(
+                'closedCampaign'=>$closedCampaign->getData() ,
+                'merchant'=>$merchant,
+		'affiliate'=>$affiliate,
+            ));
+        }
+        
         public function actionAjaxGetAffiliate() {
             if(Yii::app()->request->getRequestType() == 'POST') {
                 $merchant = Yii::app()->request->getPost("merchant") ;
@@ -142,6 +189,38 @@ class CampaignController extends Controller
                 $this->renderPartial('ajaxGetAffiliate',array(
                     'data' => $data->getData(),
                     'affiliate' => $affiliate ,
+                ));
+            }
+        }
+        public function actionAjaxGetClosedCampaign() {
+            if(Yii::app()->request->getRequestType() == 'POST') {
+                $criteria = new CDbCriteria ;
+                $criteria->addCondition('final_value IS NOT NULL');
+                $criteria->with = array('merchant','affiliate','addedBy','finalizedBy');
+                
+                if( Yii::app()->request->getPost("month")=='true') {
+                    $period = Yii::app()->request->getPost("monthValue") ;
+                    $date = date("Y-m-d", strtotime($period));
+                    $criteria->addCondition("campaign_date = '$date'");
+                }
+                
+                if( Yii::app()->request->getPost("merchant")=="true") {
+                    $merchant_id = Yii::app()->request->getPost("merchantValue");
+                    $criteria->addCondition("merchant_id = $merchant_id");
+                }
+                
+                if( Yii::app()->request->getPost("affiliate")=="true") {
+                    $affiliate_id = Yii::app()->request->getPost("affiliateValue");
+                    $criteria->addCondition("affiliate_id = $affiliate_id");
+                }
+                    
+                
+                $closedCampaign = new CActiveDataProvider('Campaign', array(
+                    'criteria'=>  $criteria,
+                    'pagination' => false,));
+                
+                $this->renderPartial('ajaxGetClosedCampaign',array(
+                    'closedCampaign' => $closedCampaign->getData(),
                 ));
             }
         }

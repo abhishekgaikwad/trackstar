@@ -29,8 +29,7 @@ class SiteController extends Controller
 	 */
 	public function actionIndex()
 	{
-		// renders the view file 'protected/views/site/index.php'
-		// using the default layout 'protected/views/layouts/main.php'
+               
 		$this->actionLogin();
 	}
 
@@ -81,6 +80,10 @@ class SiteController extends Controller
 	{
 		$model=new LoginForm;
 
+                if(Yii::app()->session['user_id']) {
+                    $url = Yii::app()->createUrl('home') ;
+                    $this->redirect($url);
+                }
 		// if it is ajax validation request
 		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
 		{
