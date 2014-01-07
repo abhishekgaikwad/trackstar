@@ -43,11 +43,12 @@
             </li>
             <li <?php if(Yii::app()->controller->action->id=="generateReports") echo 'class="active"'; ;?> ><a href="<?php  echo $this->createUrl('home/generateReports'); ?>">Reports</a></li>
             <li <?php 
-                if(Yii::app()->controller->action->id=="addMerchant" || Yii::app()->controller->action->id=="addUser" || Yii::app()->controller->action->id=="addAffiliate") echo  'class="active dropdown"' ;
+                if(Yii::app()->controller->action->id=="addCampaign" || Yii::app()->controller->action->id=="updateCampaign") echo  'class="active dropdown"' ;
                 else echo 'class="dropdown"' ; ?>><a href="#" class="dropdown-toggle" data-toggle="dropdown">Campaign<b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li><a href="<?php  echo $this->createUrl('campaign/addCampaign'); ?>">Add</a></li>
                 <li><a href="<?php  echo $this->createUrl('campaign/updateCampaign'); ?>">Update</a></li>
+                <li><a href="<?php  echo $this->createUrl('campaign/closedCampaign'); ?>">Closed</a></li>
             </ul>		
             </li>
 	  

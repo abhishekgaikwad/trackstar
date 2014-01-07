@@ -79,7 +79,7 @@ class HomeController extends Controller
 		
 		$criteria = new CDbCriteria ;
 		//$criteria->condition = "affiliate_id = $value AND date_of_report >= '$dateStart' AND date_of_report <= '$dateEnd'  ";
-		$criteria->order = 'date_of_report DESC';
+		$criteria->order = 't.added_on DESC';
 		$criteria->with = array('merchant','affiliate',);
 		$criteria->limit = 10;
 		//var_dump($present);
@@ -98,7 +98,7 @@ class HomeController extends Controller
 			$model->user_id = Yii::app()->session['user_id'] ;
 			$model->added_on = new CDbExpression('NOW()') ;
 			if($model->save()) {
-				$present=Commission::model()->with('merchant','affiliate')->findAll();
+				$present=Commission::model()->with('merchant','affiliate')->findAll($criteria);
 				$this->render('addTransaction',array(
 				'model'=>new Commission,
 				'merchant'=>$merchant,

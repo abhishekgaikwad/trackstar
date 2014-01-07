@@ -39,7 +39,7 @@ class Campaign extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('merchant_id, affiliate_id, campaign_date, estimated_value, added_by, added_on', 'required'),
+			array('merchant_id, affiliate_id, campaign_date, , added_by, added_on', 'required'),
 			array('merchant_id, affiliate_id, estimated_value, final_value, added_by, finalized_by', 'numerical', 'integerOnly'=>true),
 			array('finalized_on', 'safe'),
 			// The following rule is used by search().
