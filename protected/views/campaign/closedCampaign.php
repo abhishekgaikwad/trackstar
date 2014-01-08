@@ -30,7 +30,7 @@ $(window).ready(function(){
         $.ajax({
             type: "POST",
             url: url,
-            data: data,
+            data: JSON.stringify(data),
             success: function(data, textStatus, jqXHR) {
                 var $div = $("#result") ;
 		$div.html("");

@@ -51,6 +51,14 @@
                 <li><a href="<?php  echo $this->createUrl('campaign/closedCampaign'); ?>">Closed</a></li>
             </ul>		
             </li>
+            <li <?php 
+                if(Yii::app()->controller->action->id=="add" || Yii::app()->controller->action->id=="view") echo  'class="active dropdown"' ;
+                else echo 'class="dropdown"' ; ?>><a href="#" class="dropdown-toggle" data-toggle="dropdown">Invoice<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="<?php  echo $this->createUrl('invoice/add'); ?>">Add</a></li>
+                <li><a href="<?php  echo $this->createUrl('invoice/view'); ?>">Update</a></li>
+            </ul>		
+            </li>
 	  
 	  
 	  

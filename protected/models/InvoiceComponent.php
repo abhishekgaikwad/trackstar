@@ -1,33 +1,29 @@
 <?php
 
 /**
- * This is the model class for table "user".
+ * This is the model class for table "invoice_component".
  *
- * The followings are the available columns in table 'user':
+ * The followings are the available columns in table 'invoice_component':
  * @property integer $id
- * @property string $fname
- * @property string $lname
- * @property string $username
- * @property string $password
- * @property string $added_on
+ * @property integer $invoice_id
+ * @property integer $campaign_id
+ * @property string $description
+ * @property integer $value
+ * @property integer $tax
+ * @property string $date_of_component
  *
  * The followings are the available model relations:
- * @property Affiliate[] $affiliates
- * @property Commission[] $commissions
- * @property Merchant[] $merchants
+ * @property Campaign $campaign
+ * @property Invoice $invoice
  */
-class User extends CActiveRecord
+class InvoiceComponent extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'user';
-	}
-	public function abc()
-	{
-		return 'user';
+		return 'invoice_component';
 	}
 
 	/**
@@ -38,14 +34,13 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fname, lname, username, password', 'required'),
-			array('id', 'numerical', 'integerOnly'=>true),
-			array('fname, lname, username, password', 'length', 'max'=>45),
-			array('added_on', 'safe'),
-			array('username', 'unique', 'message' => 'This email already exists.'),
+			array('invoice_id, value, tax', 'required'),
+			array('id, invoice_id, campaign_id, value, tax', 'numerical', 'integerOnly'=>true),
+			array('description', 'length', 'max'=>45),
+			array('date_of_component', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, fname, lname, username, password, added_on', 'safe', 'on'=>'search'),
+			array('id, invoice_id, campaign_id, description, value, tax, date_of_component', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,12 +52,8 @@ class User extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'affiliates' => array(self::HAS_MANY, 'Affiliate', 'user_id'),
-                        'campaigns_added' => array(self::HAS_MANY, 'Campaign', 'added_by'),
-                        'campaigns_finalised' => array(self::HAS_MANY, 'Campaign', 'finalized_by'),
-                        'commissions' => array(self::HAS_MANY, 'Commission', 'user_id'),
-                        'invoices' => array(self::HAS_MANY, 'Invoice', 'added_by'),
-                        'merchants' => array(self::HAS_MANY, 'Merchant', 'user_id'),
+			'campaign' => array(self::BELONGS_TO, 'Campaign', 'campaign_id'),
+			'invoice' => array(self::BELONGS_TO, 'Invoice', 'invoice_id'),
 		);
 	}
 
@@ -73,11 +64,12 @@ class User extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'fname' => 'First Name',
-			'lname' => 'Last Name',
-			'username' => 'Email',
-			'password' => 'Password',
-			'added_on' => 'Added On',
+			'invoice_id' => 'Invoice',
+			'campaign_id' => 'Campaign',
+			'description' => 'Description',
+			'value' => 'Value',
+			'tax' => 'Tax',
+			'date_of_component' => 'Date Of Component',
 		);
 	}
 
@@ -100,11 +92,12 @@ class User extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('fname',$this->fname,true);
-		$criteria->compare('lname',$this->lname,true);
-		$criteria->compare('username',$this->username,true);
-		$criteria->compare('password',$this->password,true);
-		$criteria->compare('added_on',$this->added_on,true);
+		$criteria->compare('invoice_id',$this->invoice_id);
+		$criteria->compare('campaign_id',$this->campaign_id);
+		$criteria->compare('description',$this->description,true);
+		$criteria->compare('value',$this->value);
+		$criteria->compare('tax',$this->tax);
+		$criteria->compare('date_of_component',$this->date_of_component,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -115,7 +108,7 @@ class User extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return User the static model class
+	 * @return InvoiceComponent the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

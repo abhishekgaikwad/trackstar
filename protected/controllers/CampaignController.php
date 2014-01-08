@@ -173,6 +173,7 @@ class CampaignController extends Controller
                 'merchant'=>$merchant,
 		'affiliate'=>$affiliate,
             ));
+            
         }
         
         public function actionAjaxGetAffiliate() {
@@ -223,6 +224,7 @@ class CampaignController extends Controller
                     'closedCampaign' => $closedCampaign->getData(),
                 ));
             }
+            
         }
 
 	// Uncomment the following methods and override them if needed
