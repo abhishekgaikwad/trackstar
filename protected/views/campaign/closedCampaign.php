@@ -30,12 +30,12 @@ $(window).ready(function(){
         $.ajax({
             type: "POST",
             url: url,
-            data: JSON.stringify(data),
+            data: data,
             success: function(data, textStatus, jqXHR) {
                 var $div = $("#result") ;
 		$div.html("");
                 $div.append("<table id=\"resultTable\" class=\"table table-striped \">");
-                $("#resultTable").append("<tr\"><th>Campaign Date</th><th>Merchant</th><th>Affiliate</th><th>Estimate</th><th>Final</th><th>Added By</th><th>Finalized By</th></tr>");
+                $("#resultTable").append("<tr\"><th>Campaign Date</th><th>Merchant</th><th>Affiliate</th><th>Estimate</th><th>Final</th><th>Added By</th><th>Finalized By</th><th>Billed</th></tr>");
                 var myArray = jQuery.parseJSON(data);
                 for(var i=0;i<myArray.length;i++){
                     $("#resultTable").append("<tr><td>" + 
@@ -45,7 +45,8 @@ $(window).ready(function(){
                             (myArray[i])[3]+"</td><td>" + 
                             (myArray[i])[4]+"</td><td>" + 
                             (myArray[i])[5]+"</td><td>" + 
-                            (myArray[i])[6]+"</td></tr>");
+                            (myArray[i])[6]+"</td><td>" + 
+                            (myArray[i])[7]+"</td></tr>");
 
                 }
                 //alert((myArray[2])[0]);
@@ -57,8 +58,7 @@ $(window).ready(function(){
 });
 </script>
 
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
 <script>
 $(function() {
     $( "#datepicker" ).datepicker( {

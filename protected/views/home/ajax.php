@@ -18,7 +18,8 @@
 	if($intervalType == "weekly") {
 		
 		$arr = array();
-		
+		$start = strtotime($dateStart);
+		$end = strtotime($dateEnd);
 		foreach($commission as $item) {
 			$ddate = $item->date_of_report ;
 			$duedt = explode("-", $ddate);

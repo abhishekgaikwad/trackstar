@@ -7,7 +7,9 @@
 	<meta name="language" content="en" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap-theme.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/jquery-ui.css" />
 	<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.js"></script>
+	<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/bootstrap.js"></script>
 	<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.validate.js"></script>
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
@@ -56,7 +58,7 @@
                 else echo 'class="dropdown"' ; ?>><a href="#" class="dropdown-toggle" data-toggle="dropdown">Invoice<b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li><a href="<?php  echo $this->createUrl('invoice/add'); ?>">Add</a></li>
-                <li><a href="<?php  echo $this->createUrl('invoice/view'); ?>">Update</a></li>
+                <li><a href="<?php  echo $this->createUrl('invoice/view'); ?>">View</a></li>
             </ul>		
             </li>
 	  

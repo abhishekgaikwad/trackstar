@@ -9,14 +9,14 @@
  * @property integer $affiliate_id
  * @property string $date_of_invoice
  * @property integer $service_value
- * @property integer $service_tax
- * @property integer $total_value
+ * @property double $service_tax
+ * @property double $total_value
  * @property integer $added_by
  * @property string $added_on
  *
  * The followings are the available model relations:
- * @property Affiliate $affiliate
  * @property User $addedBy
+ * @property Affiliate $affiliate
  * @property InvoiceComponent[] $invoiceComponents
  */
 class Invoice extends CActiveRecord
@@ -38,7 +38,8 @@ class Invoice extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('invoice_number, affiliate_id, date_of_invoice, added_by, added_on', 'required'),
-			array('id, affiliate_id, service_value, service_tax, total_value, added_by', 'numerical', 'integerOnly'=>true),
+			array('affiliate_id, service_value, added_by', 'numerical', 'integerOnly'=>true),
+			array('service_tax, total_value', 'numerical'),
 			array('invoice_number', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -54,8 +55,8 @@ class Invoice extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'affiliate' => array(self::BELONGS_TO, 'Affiliate', 'affiliate_id'),
 			'addedBy' => array(self::BELONGS_TO, 'User', 'added_by'),
+			'affiliate' => array(self::BELONGS_TO, 'Affiliate', 'affiliate_id'),
 			'invoiceComponents' => array(self::HAS_MANY, 'InvoiceComponent', 'invoice_id'),
 		);
 	}

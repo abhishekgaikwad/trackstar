@@ -9,7 +9,7 @@
  * @property integer $campaign_id
  * @property string $description
  * @property integer $value
- * @property integer $tax
+ * @property double $tax
  * @property string $date_of_component
  *
  * The followings are the available model relations:
@@ -35,7 +35,8 @@ class InvoiceComponent extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('invoice_id, value, tax', 'required'),
-			array('id, invoice_id, campaign_id, value, tax', 'numerical', 'integerOnly'=>true),
+			array('invoice_id, campaign_id, value', 'numerical', 'integerOnly'=>true),
+			array('tax', 'numerical'),
 			array('description', 'length', 'max'=>45),
 			array('date_of_component', 'safe'),
 			// The following rule is used by search().
